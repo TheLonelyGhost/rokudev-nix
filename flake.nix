@@ -13,35 +13,37 @@
   inputs.nix-npm-buildpackage.url = "github:serokell/nix-npm-buildpackage";
 
   outputs = { self, nixpkgs, flake-utils, flake-compat, npmlock2nix, nix-npm-buildpackage }:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-      };
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
 
-      # 14.x is the latest that node2nix (and others) can support due to some changes in how
-      # the package-lock.json (and other resolved dependencies') versions are parsed. Update
-      # this version once we can because this is super old by now.
-      #
-      # @see https://github.com/nix-community/npmlock2nix/issues/45
-      nodejs = pkgs.nodejs-14_x;
+        # 14.x is the latest that node2nix (and others) can support due to some changes in how
+        # the package-lock.json (and other resolved dependencies') versions are parsed. Update
+        # this version once we can because this is super old by now.
+        #
+        # @see https://github.com/nix-community/npmlock2nix/issues/45
+        nodejs = pkgs.nodejs-14_x;
 
-      brighterscript = import ./packages/brighterscript.nix {
-        inherit pkgs nodejs;
-      };
-    in {
-      devShell = pkgs.mkShell {
-        nativeBuildInputs = [
-          pkgs.bashInteractive
-          pkgs.nodePackages.node2nix
-          pkgs.nodePackages.npm
-          pkgs.nodejs
-        ];
-        buildInputs = [
-        ];
-      };
+      in
+        {
+          devShell = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.bashInteractive
+              pkgs.nodePackages.node2nix
+              pkgs.nodePackages.npm
+              pkgs.nodejs
+            ];
+            buildInputs = [];
+          };
 
-      packages = {
-        brighterscript = brighterscript;
-      };
-    });
+          packages = {
+            brighterscript = import ./packages/brighterscript.nix { inherit pkgs nodejs; };
+            brighterscript-formatter = import ./packages/brighterscript-formatter.nix { inherit pkgs nodejs; };
+            bslint = import ./packages/bslint.nix { inherit pkgs nodejs; };
+            ropm = import ./packages/ropm.nix { inherit pkgs nodejs; };
+          };
+        }
+    );
 }

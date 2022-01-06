@@ -1,3 +1,6 @@
 [
-  "brighterscript"
+  "@rokucommunity/bslint",
+  "brighterscript",
+  "brighterscript-formatter",
+  "ropm"
 ]

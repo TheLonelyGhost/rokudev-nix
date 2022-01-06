@@ -5,4 +5,9 @@ let
     inherit pkgs nodejs;
   };
 in
-npm.brighterscript
+npm.brighterscript.override {
+  meta = {
+    description = "A superset of Roku's BrightScript language. Compiles to standard BrightScript.";
+    homepage = "https://github.com/rokucommunity/brighterscript";
+  };
+}
