@@ -6,13 +6,8 @@
     url = "github:edolstra/flake-compat";
     flake = false;
   };
-  inputs.npmlock2nix = {
-    url = "github:nix-community/npmlock2nix";
-    flake = false;
-  };
-  inputs.nix-npm-buildpackage.url = "github:serokell/nix-npm-buildpackage";
 
-  outputs = { self, nixpkgs, flake-utils, flake-compat, npmlock2nix, nix-npm-buildpackage }:
+  outputs = { self, nixpkgs, flake-utils, flake-compat }:
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import nixpkgs {
