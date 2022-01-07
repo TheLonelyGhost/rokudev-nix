@@ -36,7 +36,7 @@ Add this repo to your `flake.nix` inputs like:
 }
 ```
 
-**Updating:** Anytime you want to update what roku-devtools-nix offers, run `nix flake lock --update-input roku-devtools` and rebuild your nix expression acccordingly.
+**Updating:** Anytime you want to update what roku-devtools offers, run `nix flake lock --update-input roku-devtools` and rebuild your nix expression acccordingly.
 
 ### Without Flakes
 
@@ -53,7 +53,7 @@ let
   sources = import ./nix/sources.nix {};
   pkgs = import sources.nixpkgs {};
 
-  roku = (import (pkgs.fetchGitHub { inherit (sources.roku-devtools) owner repo rev sha256; })).outputs.packages."${builtings.currentSystem}";
+  roku = (import (pkgs.fetchFromGitHub { inherit (sources.roku-devtools) owner repo rev sha256; })).outputs.packages."${builtins.currentSystem}";
 in
 {
   home.packages = [
@@ -62,7 +62,7 @@ in
 }
 ```
 
-**Updating:** Anytime you want to update what roku-devtools-nix offers, run `niv update roku-devtools-nix` and rebuild your nix expression acccordingly.
+**Updating:** Anytime you want to update what roku-devtools offers, run `niv update roku-devtools-nix` and rebuild your nix expression acccordingly.
 
 [flakes]: https://github.com/NixOS/nix/blob/master/src/nix/flake.md
 [home-manager]: https://github.com/nix-community/home-manager
