@@ -6,6 +6,7 @@ test:
 .PHONY: update
 update:
 	cd ./npm && \
+		touch ./foo.nix && \
 		rm ./*.nix && \
 	node2nix --input ./deps.json
 
